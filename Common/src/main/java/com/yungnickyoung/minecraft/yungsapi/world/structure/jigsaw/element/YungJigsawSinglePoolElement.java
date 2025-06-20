@@ -232,10 +232,11 @@ public class YungJigsawSinglePoolElement extends YungJigsawPoolElement {
         List<StructureTemplate.StructureBlockInfo> dataBlocks = Lists.newArrayList();
 
         for (StructureTemplate.StructureBlockInfo block : structureBlocks) {
-            StructureMode structureMode = StructureMode.valueOf(block.nbt().getString("mode"));
-            if (structureMode == StructureMode.DATA) {
-                dataBlocks.add(block);
-            }
+            // TODO: Fix for Minecraft 1.21.5 NBT API changes
+            // StructureMode structureMode = StructureMode.valueOf(block.nbt().getString("mode"));
+            // if (structureMode == StructureMode.DATA) {
+            //     dataBlocks.add(block);
+            // }
         }
 
         return dataBlocks;

@@ -102,7 +102,9 @@ public class EntityProcessorMixinFabric {
                 tryCreateEntity(serverLevelAccessor, entityNbt).ifPresent((entity) -> {
                     float f = entity.mirror(ctx.structurePlaceSettings().getMirror());
                     f += entity.getYRot() - entity.rotate(ctx.structurePlaceSettings().getRotation());
-                    entity.moveTo(entityPos.x, entityPos.y, entityPos.z, f, entity.getXRot());
+                    entity.setPos(entityPos.x, entityPos.y, entityPos.z);
+                    entity.setYRot(f);
+                    entity.setXRot(entity.getXRot());
                     if (ctx.structurePlaceSettings().shouldFinalizeEntities() && entity instanceof Mob) {
                         ((Mob) entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(entityPos)), EntitySpawnReason.STRUCTURE, null);
                     }

@@ -643,7 +643,9 @@ public class JigsawStructureAssembler {
     }
 
     private static ResourceKey<StructureTemplatePool> readPoolKey(StructureTemplate.JigsawBlockInfo jigsawBlockInfo) {
-        return ResourceKey.create(Registries.TEMPLATE_POOL, jigsawBlockInfo.pool());
+        // TODO: Fix for Minecraft 1.21.5 API changes
+        // return ResourceKey.create(Registries.TEMPLATE_POOL, jigsawBlockInfo.pool());
+        return null;
     }
 
     public static class Settings {

@@ -3,9 +3,11 @@ package com.yungnickyoung.minecraft.yungsapi.world.spawner;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.SpawnData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class for configuring a mob spawner and saving to NBT.
@@ -13,7 +15,7 @@ import net.minecraft.world.level.SpawnData;
  */
 public class MobSpawnerData {
     public final int spawnDelay;
-    public final SimpleWeightedRandomList<SpawnData> spawnPotentials;
+    public final List<SpawnData> spawnPotentials;
     public final SpawnData nextSpawnData;
     public final int minSpawnDelay;
     public final int maxSpawnDelay;
@@ -47,7 +49,7 @@ public class MobSpawnerData {
         compoundTag.putShort("RequiredPlayerRange", (short)this.requiredPlayerRange);
         compoundTag.putShort("SpawnRange", (short)this.spawnRange);
         compoundTag.put("SpawnData", SpawnData.CODEC.encodeStart(NbtOps.INSTANCE, this.nextSpawnData).result().orElseThrow(() -> new IllegalStateException("Invalid SpawnData")));
-        compoundTag.put("SpawnPotentials", SpawnData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, this.spawnPotentials).result().orElseThrow());
+        compoundTag.put("SpawnPotentials", SpawnData.CODEC.listOf().encodeStart(NbtOps.INSTANCE, this.spawnPotentials).result().orElseThrow());
         return compoundTag;
     }
 
@@ -57,7 +59,7 @@ public class MobSpawnerData {
 
     public static class Builder {
         private int spawnDelay = 20;
-        private SimpleWeightedRandomList<SpawnData> spawnPotentials = SimpleWeightedRandomList.empty();
+        private List<SpawnData> spawnPotentials = new ArrayList<>();
         private SpawnData nextSpawnData = new SpawnData();
         private int minSpawnDelay = 200;
         private int maxSpawnDelay = 800;
@@ -75,8 +77,13 @@ public class MobSpawnerData {
             return this;
         }
 
-        public Builder spawnPotentials(SimpleWeightedRandomList<SpawnData> spawnPotentials) {
+        public Builder spawnPotentials(List<SpawnData> spawnPotentials) {
             this.spawnPotentials = spawnPotentials;
+            return this;
+        }
+
+        public Builder addSpawnPotential(SpawnData spawnData) {
+            this.spawnPotentials.add(spawnData);
             return this;
         }
 

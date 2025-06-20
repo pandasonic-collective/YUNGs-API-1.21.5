@@ -69,6 +69,7 @@ public class ItemRandomizer {
      * Constructs a new ItemRandomizer from a CompoundTag.
      * @param compoundTag The CompoundTag
      */
+    /*
     public ItemRandomizer(CompoundTag compoundTag) {
         this.defaultItem = BuiltInRegistries.ITEM.byId(compoundTag.getInt("defaultItemId"));
         this.entries = new ArrayList<>();
@@ -81,6 +82,7 @@ public class ItemRandomizer {
             this.addItem(item, chance);
         });
     }
+    */
 
     /**
      * Constructs a new ItemRandomizer from a list of Entries and a default Item.
